@@ -1,0 +1,204 @@
+:root {
+
+    --error-color: rgb(194, 0, 0);
+    --logocolor: #57A6D8; 
+
+}
+
+html, body {
+
+    margin: 0;
+    padding: 0;  
+
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif; 
+   
+}
+
+#menu {
+    background: black; 
+    width: 100%; 
+    height: 80px; 
+    line-height: 66px;
+}
+
+#inner {
+    display: flex; /* ADDED */
+    margin:auto; 
+}
+
+#m-left {
+
+    float: left; 
+
+}
+
+#logo {
+
+    height: 64px;
+    margin: 2px;
+    padding: 6px;
+    
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown > .dropdown-child {
+    position: absolute; /* pour éviter que le menu ne déplace les autres éléments de la page */
+    z-index: 10; /* position en profondeur sur la page : plus il est grand, plus l'élément sera en avant
+    comme ça le menu sera toujours par-dessus le reste */
+    display: none;
+    background-color: white; /* couleur de fond du menu */
+    width: 200px;
+    border: solid 1px #707070; 
+    
+}
+
+.dropdown:hover > .dropdown-child {
+    display: block;
+}
+
+.dropdown-child > * {
+    display: block;
+    margin: 20px;
+    line-height: normal;
+}
+
+#products {
+    height: 36px;
+    margin-bottom: 12px;
+}
+
+.dropdown-child img {
+    height: 20px;
+}
+
+
+#m-middle {
+
+    padding-top: 20px;
+    float: left;
+    flex: 1; /* ADDED */
+}
+
+#produits {
+
+    color: white;
+    margin: 8px;
+    margin-left: 0px;
+    vertical-align: text-bottom;
+    
+
+}
+
+#site-search {
+
+   width: calc(100% - 64px); /* ADDED */
+    font-size: 15px;
+    padding: 3px;
+
+}
+
+#searchbutton {
+
+    width: 20px; 
+    padding: 2px;
+    
+}
+   
+#m-right {
+
+    float: right; 
+    padding-top: 20px; 
+}
+
+#m-right img {
+    height: 36px;
+}
+
+#heart {
+   
+    margin: 0px; 
+    padding: 20px; 
+}
+
+#cart {
+    margin: 0px 10px 0px 0px; 
+    padding: 20px; 
+}
+
+#connexioninscription {
+    margin: 10px; 
+    padding: 8px; 
+}
+
+input.invalid,
+select.invalid {
+
+    box-shadow: 0 0 0 2px var(--error-color); /* À CHANGER */
+
+}
+
+.error-msg {
+
+    color: var(--error-color);
+
+}
+
+.error-msg.invisible {
+
+    opacity: 0;
+    cursor: default;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+
+}
+.up {
+    background-color: #ebe46c;
+    text-align: center;
+    padding: 5px 0px;
+    cursor: pointer; /* afficher un curseur de main sur le "Retour en haut" */
+}
+
+.secondbar {
+   background-color: #ebe46c; 
+   text-align: center; 
+   padding: 5px 0; 
+}
+
+#questions {
+    height: 100px;
+    width: 80%; 
+    padding: 25px;  
+    resize: none;
+    display: block;
+    margin: auto;
+    
+}
+
+.footer {
+    background-color: #C9DEDE; 
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column; /* blocs disposés verticalement */
+}
+
+.help {
+    margin: 10px; 
+}
+
+.services-products {
+    padding: 20px;
+
+}
+.knowusbetter {
+    padding: 20px; 
+}

@@ -1,0 +1,15 @@
+<h1>Nouvelle demande d'assistance</h1>
+<p>%assistantFirstName%, un utilisateur de <i>La mésange bleue</i> requiert votre aide.</p>
+<table>
+    <tr>
+        <td>Adresse e-mail de l'utilisateur :</td>
+        <td>%userEmailAddress%</td>
+    </tr>
+    <tr>
+        <td>Date et heure de la demande :</td>
+        <td>%date% à %time%</td>
+    </tr>
+</table>
+<h3>Son message :</h3>
+<p>%message%</p><br />
+<a href="mailto:%userEmailAddress%?bcc=%from%&subject=Réponse à votre demande d'assistance">Cliquez ici pour lui répondre.</a>

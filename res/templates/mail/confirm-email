@@ -1,0 +1,5 @@
+<h1>Bienvenue, %firstName%</h1>
+<p>Le code d'activation de votre compte <i>La mésange bleue</i> est :<br />
+<h2><samp>%code%</samp></h2></p>
+Vous pouvez également suivre ce lien : %pageUrl%?activation-code=%code%</p>
+<p><i>Ceci est un message automatique, merci de ne pas y répondre.</i></p>

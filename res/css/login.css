@@ -1,0 +1,41 @@
+.login {
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.buttonls{
+    height: 45px; 
+    width: 300px;
+    color: white; 
+    font-weight: bold;
+    /*
+        100     300     500     700     900
+        lighter         normal  bold    bolder
+    */
+    background-color: #242F64; 
+    border-radius: 10px; 
+    transition: all 500ms;
+    transition: background-color 1s ease;
+}
+
+.buttonls:hover {
+    background-color: black;
+}
+
+.buttonls:active {
+    background-color: white;
+}
+
+
+
+#password {
+    width: 300px;  
+    height: 30px;  
+    
+}
+
+#user-login {
+    width: 300px;  
+    height: 30px;
+     
+}
