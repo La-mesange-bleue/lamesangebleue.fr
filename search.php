@@ -17,17 +17,18 @@ if (isset($_GET["q"]) && str_length($_GET["q"]) > 0) {
         $order_by = $order_arr["default"][0];
     
     $SEARCH_QUERY = mysqli_escape_string($conn, $_GET["q"]);
-    $SEARCH_QUERY = remove_prefix($SEARCH_QUERY, " ");
-    $SEARCH_QUERY = remove_suffix($SEARCH_QUERY, " ");
+    $SEARCH_QUERY = trim($SEARCH_QUERY);
     $words = explode(" ", $SEARCH_QUERY);
-    $filters_arr = array();
+    $filters_arr = [
+        "'1' = '1'"
+    ];
     foreach ($words as $word)
         if (str_length($word) > 0)
             array_push($filters_arr, "`Products`.`name` LIKE '%$word%' OR `Products`.`description` LIKE '%$word%'");
     $filters = join(" OR ", $filters_arr);
 
     // add `Categories`.`picture` to $sql?
-    $sql = "SELECT `Products`.*, `Categories`.`name` AS `category_name` FROM `Products` JOIN `Categories` ON `Products`.`category` = `Categories`.`id` WHERE ($filters) AND `Products`.`is_valid` = 1 ORDER BY $order_by;";
+    $sql = "SELECT `Products`.*, `Categories`.`name` AS `category_name` FROM `Products` JOIN `Categories` ON `Products`.`category` = `Categories`.`id` WHERE ($filters) AND `Products`.`is_valid` = '1' ORDER BY $order_by;";
     $res = mysqli_query($conn, $sql);
     if ($res != false) {
         $PRODUCTS = array();
