@@ -4,7 +4,7 @@ require_once("./res/php/common.php");
 if (isset($_POST["user-name"]) && isset($_POST["first-name"]) && isset($_POST["last-name"])
 && isset($_POST["email-address"]) && isset($_POST["phone-number"]) && isset($_POST["password"])
 && isset($_POST["birth-day"]) && isset($_POST["birth-month"]) && isset($_POST["birth-year"])
-&& isset($_POST["gender"])) {
+&& isset($_POST["gender"])) { //4 7 verifie que tous les champs sont remplis 
     $user_name = mysqli_escape_string($conn, $_POST["user-name"]);
     $first_name = mysqli_escape_string($conn, $_POST["first-name"]);
     $last_name = mysqli_escape_string($conn, $_POST["last-name"]);
@@ -17,18 +17,18 @@ if (isset($_POST["user-name"]) && isset($_POST["first-name"]) && isset($_POST["l
     $birth_year = mysqli_escape_string($conn, $_POST["birth-year"]);
     $birth_date = "$birth_year-$birth_month-$birth_day";
     $gender = mysqli_escape_string($conn, $_POST["gender"]);
-
+//8 19 recupere les valeurs des champs 
     $check_sql = "SELECT COUNT(*) FROM `Users` WHERE `Users`.`user_name` = '$user_name' OR `Users`.`email_address` = '$email_address';";
-    $check_res = mysqli_query($conn, $check_sql);
+    $check_res = mysqli_query($conn, $check_sql); //verifie si un utilisateur a meme username ou @
     if ($check_res != false) {
         $check_row = mysqli_fetch_array($check_res);
         if ($check_row) {
             if ($check_row[0] == 0) {
                 $sql = "INSERT INTO `Users` (`id`, `user_name`, `first_name`, `last_name`, `email_address`, `phone_number`, `birth_date`, `password`, `registration_date`) VALUES (NULL, '$user_name', '$first_name', '$last_name', '$email_address', '$phone_number', '$birth_date', '$password_hash', NOW());";
-                $res = mysqli_query($conn, $sql);
+                $res = mysqli_query($conn, $sql); //rajoute utilsateur dans bdd
                 if ($res == true) {
                     $_SESSION["CONFIRM_EMAIL_login"] = $user_name;
-                    redirect("$PATH/confirm-email.php");
+                    redirect("$PATH/confirm-email.php"); //redirige vers page de confirmation de mail 
                 } else {
                     $_SESSION["SIGNUP_error_msg"] = "L'inscription a échoué";
                 }

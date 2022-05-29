@@ -13,7 +13,7 @@ function check_user_name() {
         show_error_msg("user-name", "Nom d'utilisateur invalide");
         return false;
     }
-    // TO-DO (?): check if username is already taken (AJAX)
+    // verifie que le champ username est bien rempli
 }
 
 
@@ -30,7 +30,7 @@ function check_first_name() {
         show_error_msg("first-name", "Veuillez remplir ce champ");
         return false;
     }
-}
+} // verifie que le champ prenom est bien rempli
 
 
 function check_last_name() {
@@ -46,7 +46,7 @@ function check_last_name() {
         show_error_msg("last-name", "Veuillez remplir ce champ");
         return false;
     }
-}
+} // verifie que le champ nom de famille est bien rempli
 
 
 function check_email_address() {
@@ -64,7 +64,7 @@ function check_email_address() {
         show_error_msg("email-address", "Adresse e-mail invalide");
         return false;
     }
-    // TO-DO: check if email address is already taken
+    // verifie que le champ mail est bien rempli
 }
 
 
@@ -80,7 +80,7 @@ function check_phone_number() {
         e.classList.add("invalid");
         show_error_msg("phone-number", "Numéro de téléphone invalide. Il doit être composé de dix chiffres.");
         return false;
-    }
+    } //verifie que le champ numero de tel est bien rempli 
 }
 
 
@@ -107,7 +107,7 @@ function check_password() {
         e.classList.add("invalid");
         show_error_msg("password", "Créez une combinaison d'au moins six chiffres, lettres majuscules et lettres minuscules.");
         return false;
-    }
+    } // verifie que le champ mot de passe est correct
 }
 
 
@@ -122,7 +122,7 @@ function check_confirm_password() {
         e2.classList.add("invalid");
         show_error_msg("confirm-password", "Les mots de passe ne correspondent pas");
         return false;
-    }
+    } //verifie si le champ confirmé mdp est le meme que mdp 
 }
 
 
@@ -154,7 +154,7 @@ function check_birth_date() {
         hide_error_msg("birth-date");
         return true;
 
-    }
+    } //verifie si majeure ou non
 }
 
 
@@ -172,7 +172,7 @@ function check_gender() {
         });
         hide_error_msg("gender");
         return true;
-    }
+    } //verifie que le champ genre est bien rempli 
 }
 
 
@@ -189,7 +189,7 @@ function check_form() {
     return a && b && c
         && d && e && f
         && g && h && i;
-}
+} //verifie tout 
 
 
 function gen_birth_years() {
@@ -203,7 +203,7 @@ function gen_birth_years() {
         child.innerHTML = i;
         year_select.appendChild(child);
     }
-}
+} //genere dans le formulaire d'inscription automatiquement toutes les années
 
 
 function gen_birth_months() {
@@ -222,7 +222,7 @@ function gen_birth_months() {
         child.innerHTML = months[i];
         month_select.appendChild(child);
     }
-}
+} // genere dans le formulaire d'inscription automatiquement les mois
 
 
 function gen_birth_days() {
@@ -244,7 +244,7 @@ function gen_birth_days() {
         10: 31,
         11: 30,
         12: 31
-    };
+    }; 
 
     let old_value = (day_select.value.length > 0) ? day_select.value : "1";
     const max = days[parseInt(month_select.value)];
@@ -258,7 +258,7 @@ function gen_birth_days() {
         day_select.appendChild(child);
     }
     day_select.value = old_value;
-}
+} //genere les jours selon le mois 
 
 
 function restore_birth_date() {
@@ -275,7 +275,7 @@ function restore_birth_date() {
         if (year_option != null) year_option.selected = true;
         form.remove();
     }
-}
+} // si la page inscription se recharge, insert meme date de naissance d'avant 
 
 
 function init() {
@@ -283,4 +283,4 @@ function init() {
     gen_birth_months();
     gen_birth_days();
     restore_birth_date();
-}
+} //quand la page est chargée, genere ces données 

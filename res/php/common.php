@@ -7,30 +7,30 @@ setlocale(LC_MONETARY, "fr_FR");
 
 function str_length($str) {
     return strlen($str);
-}
+} //retourne longueur d'une string 
 
 function format_str($str, $variables = []) {
     foreach ($variables as $variable => $value) $str = str_replace("%$variable%", $value, $str);
     return $str;
-}
+} //remplace des variables dans une chaine de caractere
 
 function format_price($price) {
     return number_format($price, 2, ",", " ");
-}
+} //mettre 2 chiffres apres virgule 
 
 function pluralize($singular, $plural, $var) {
     return ($var > 1) ? $plural : $singular;
-}
+} //mettre au pluriel ou singulier des mots, si sup a 1 pluriel 
 
 function remove_prefix($str, $prefix) {
     while (substr($str, 0, str_length($prefix)) === $prefix) $str = substr($str, str_length($prefix));
     return $str;
-}
+} //
 
 function remove_suffix($str, $suffix) {
     while (substr($str, str_length($str) - str_length($suffix)) === $suffix) $str = substr($str, 0, str_length($str) - str_length($suffix));
     return $str;
-}
+} //
 
 
 $DEBUG = true;
@@ -47,28 +47,28 @@ $WEBSITE_NAME = "La mésange bleue";
 function read($path) {
     global $ROOT, $PATH;
     return file_get_contents("$ROOT$PATH/$path");
-}
+} //lire le contenu fichier
 
 function redirect($path) {
     header("Location: $path");
     exit();
-}
+} //rediriger vers une autre page 
 
 function res($path, $disable_cache = true) {
     global $DEBUG, $PATH;
     return ($DEBUG && $disable_cache) ? "$PATH/$path?v=" . time() : "$PATH/$path";
-}
+} //charger une ressource (css ou javascript)
 
 function load($path) {
     global $ROOT, $PATH;
     include_once("$ROOT$PATH/$path");
-}
+} //charger fichier php
 
 function picture($path) {
     global $PATH;
     $PIC_PATH = "data/pictures";
     return "$PATH/$PIC_PATH/$path";
-}
+} //recuperer chemin image 
 
 function get_user_info() {
     global $conn, $USER_INFO;
@@ -82,17 +82,17 @@ function get_user_info() {
         else
             unset($USER_INFO);
     }
-}
+} //recuperer les infos d'un utilisateur connecté 
 
 function random_code($str_length = 8, $chars = "0123456789abcdefghijklmnopqrstuvwxyz") {
     $chars_str_length = strlen($chars);
     $code = "";
     for ($i = 0; $i < $str_length; $i++) $code .= $chars[rand(0, $chars_str_length - 1)];
     return $code;
-}
+} //genere un code aléatoire
 
-$conn = mysqli_connect("localhost", "www", read("res/top_secret/db_password"), "ppe");
-$conn->query("SET CHARACTER SET utf8");
-session_start();
+$conn = mysqli_connect("localhost", "www", read("res/top_secret/db_password"), "ppe"); //cree connexion server mysql
+$conn->query("SET CHARACTER SET utf8"); //passer en jeu de caractere utf8 (gere caractere speciaux)
+session_start(); //demarrer session php (variables persistantes d'une page à l'autre)
 
 ?>

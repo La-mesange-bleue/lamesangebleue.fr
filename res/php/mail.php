@@ -7,6 +7,8 @@ require("$ROOT$PATH/res/php/PHPMailer/PHPMailer.php");
 require("$ROOT$PATH/res/php/PHPMailer/Exception.php");
 require("$ROOT$PATH/res/php/PHPMailer/SMTP.php");
 
+//charge le module phpmailer
+
 
 $mail = new PHPMailer;
 $mail->CharSet = "UTF-8";
@@ -37,6 +39,7 @@ $mail->Host = "ssl0.ovh.net";
 $mail->Username = "noreply@thomasleveille.com";
 $mail->Password = read("res/top_secret/mail_password");
 $mail->setFrom("noreply@thomasleveille.com", $WEBSITE_NAME);
+//configurer identifiant du mail
 
 function send_mail($to, $subject, $body, $is_html = true) {
     global $mail;
@@ -45,6 +48,6 @@ function send_mail($to, $subject, $body, $is_html = true) {
     $mail->isHTML($is_html);
     $mail->Body = $body;
     $mail->Send();
-}
+} //fonction envoie mail
 
 ?>

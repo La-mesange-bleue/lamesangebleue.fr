@@ -2,7 +2,7 @@ function format_activation_code() {
     let e = document.querySelector("#activation-code");
     e.value = e.value.toUpperCase();
     e.value = e.value.replaceAll(" ", "");
-}
+} //dans le code d'activation: supprime les espaces et met en majuscules
 
 
 function check_activation_code() {
@@ -18,10 +18,10 @@ function check_activation_code() {
         show_error_msg("general", "Veuillez entrer un code à huit caractères alphanumériques");
         return false;
     }
-}
+} //verifie si le code d'activation est dans le bon format 
 
 
 function check_form() {
     const a = check_activation_code();
     return a;
-}
+} //verifie si la fonction plus haute est validée ou non 

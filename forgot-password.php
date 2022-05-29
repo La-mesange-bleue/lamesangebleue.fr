@@ -12,18 +12,18 @@ status codes ($STATUS):
 
 $STATUS = -1;
 if (isset($_GET["reset-code"])) { // if code is passed to the page, verify it
-    $code = strtolower(mysqli_escape_string($conn, $_GET["reset-code"]));
+    $code = strtolower(mysqli_escape_string($conn, $_GET["reset-code"])); //recupere code de reinitialisation du mdp passé a la page 
     $sql = "SELECT `ResetCodes`.`id`, `ResetCodes`.`user` FROM `ResetCodes` WHERE `ResetCodes`.`code` = '$code';";
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sql); //verifie en bdd si le code existe
     if ($res != false) {
         $row = mysqli_fetch_array($res);
         if ($row) {
             $user_id = $row["user"];
-            if (isset($_POST["new-password"])) {
+            if (isset($_POST["new-password"])) { //si saisi nouv mdp
                 $new_password = mysqli_escape_string($conn, $POST["new-password"]);
-                $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT); //hacher mdp
                 $sql = "UPDATE `Users` SET `Users`.`password` = '$new_password_hash' WHERE `Users`.`id` = $user_id;";
-                $res = mysqli_query($conn, $sql);
+                $res = mysqli_query($conn, $sql); //maj en bdd
                 if ($res == true) {
                     $STATUS = 3;
                 } else {
@@ -39,10 +39,10 @@ if (isset($_GET["reset-code"])) { // if code is passed to the page, verify it
         $_SESSION["FORGOT_PASSWORD_error_msg"] = "La connexion au serveur a échoué";
     }
 } elseif (isset($_POST["email-address"]) && isset($_POST["user-name"])) { // if user has submitted their email address and username, generate a new code, store it in DB and send it by mail to user
-    $email_address = mysqli_escape_string($conn, $_POST["email-address"]);
-    $user_name = mysqli_escape_string($conn, $_POST["user-name"]);
+    $email_address = mysqli_escape_string($conn, $_POST["email-address"]); //recupere @ saisi
+    $user_name = mysqli_escape_string($conn, $_POST["user-name"]); //recupere username saisi
     $sql = "SELECT `Users`.`id`, `Users`.`first_name` FROM `Users` WHERE `Users`.`user_name` = '$user_name' AND `Users`.`email_address` = '$email_address';";
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sql); //requete verifie s'il y a un user qui corresspond
     if ($res != false) {
         $row = mysqli_fetch_array($res);
         if ($row) {
@@ -55,9 +55,9 @@ if (isset($_GET["reset-code"])) { // if code is passed to the page, verify it
                     $check_row = mysqli_fetch_array($check_res);
                     if ($check_row && $check_row[0] == 0) $unique = true;
                 }
-            }
-            $sql2 = "DELETE FROM `ResetCodes` WHERE `ResetCodes`.`user` = {$row['id']};";
-            $sql3 = "INSERT INTO `ResetCodes` (`id`, `code`, `user`) VALUES (NULL, '$code', {$row['id']});";
+            } //49 58 generer code unique aleatoire
+            $sql2 = "DELETE FROM `ResetCodes` WHERE `ResetCodes`.`user` = {$row['id']};"; //supprmie les anciens codes
+            $sql3 = "INSERT INTO `ResetCodes` (`id`, `code`, `user`) VALUES (NULL, '$code', {$row['id']});"; //insere nouv code 
             $res2 = mysqli_query($conn, $sql2);
             $res3 = mysqli_query($conn, $sql3);
             if ($res3 == true) {
@@ -70,7 +70,7 @@ if (isset($_GET["reset-code"])) { // if code is passed to the page, verify it
                         "code" => strtoupper($code),
                         "pageUrl" => "http://{$_SERVER['HTTP_HOST']}$PATH/forgot-password.php"
                     ])
-                );
+                ); // 64 73 envoie le lien de reinitialisation du mdp par mail
                 $STATUS = 1;
             } else {
                 $_SESSION["FORGOT_PASSWORD_error_msg"] = "La création du lien de réinitialisation de mot de passe a échoué";

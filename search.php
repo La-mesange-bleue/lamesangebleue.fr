@@ -1,7 +1,7 @@
 <?php
 require_once("./res/php/common.php");
 
-if (isset($_GET["q"]) && str_length($_GET["q"]) > 0) {
+if (isset($_GET["q"]) && str_length($_GET["q"]) > 0) { //verifie qu'il y a une recherche dans l'url
     $order_arr = [
         "default" => ["`Products`.`id` ASC", "Afficher d'abord :"],
         "asc-price" => ["`Products`.`price` ASC", "le moins cher"],
@@ -10,31 +10,31 @@ if (isset($_GET["q"]) && str_length($_GET["q"]) > 0) {
         "desc-rel-date" => ["`Products`.`release_date` DESC", "le dernier sorti"],
         "asc-sale-date" => ["`Products`.`sale_date` ASC", "le premier mis en vente"],
         "desc-sale-date" => ["`Products`.`sale_date` DESC", "le dernier mis en vente"]
-    ];
+    ]; //tableau different mode de tri 
     if (isset($_GET["order-by"]) && array_key_exists(mysqli_escape_string($conn, $_GET["order-by"]), $order_arr))
         $order_by = $order_arr[mysqli_escape_string($conn, $_GET["order-by"])][0];
     else
         $order_by = $order_arr["default"][0];
     
-    $SEARCH_QUERY = mysqli_escape_string($conn, $_GET["q"]);
-    $SEARCH_QUERY = trim($SEARCH_QUERY);
-    $words = explode(" ", $SEARCH_QUERY);
+    $SEARCH_QUERY = mysqli_escape_string($conn, $_GET["q"]); //recupere recherche
+    $SEARCH_QUERY = trim($SEARCH_QUERY); //nettoie recherche
+    $words = explode(" ", $SEARCH_QUERY); //separe chaque mot de la recherche
     $filters_arr = [
     ];
     foreach ($words as $word)
         if (str_length($word) > 0)
             array_push($filters_arr, "(`Products`.`name` LIKE '%$word%' OR `Products`.`description` LIKE '%$word%')");
-    $filters = join(" AND ", $filters_arr);
+    $filters = join(" AND ", $filters_arr); //pour chaque ajout filtre de recherche dans nom ou descritption produit
 
     // add `Categories`.`picture` to $sql?
     $sql = "SELECT `Products`.*, `Categories`.`name` AS `category_name` FROM `Products` JOIN `Categories` ON `Products`.`category` = `Categories`.`id` WHERE " . (($filters) ? "($filters) AND " : "") . "`Products`.`is_valid` = 1 ORDER BY $order_by;";
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sql); //recupere les produits corresspondants a la recherche 
     if ($res != false) {
         $PRODUCTS = array();
         while ($row = mysqli_fetch_array($res)) {
             $product = $row;
             $pic_sql = "SELECT `Pictures`.`id` AS `picture_id`, `Pictures`.`path` AS `picture_path` FROM `Pictures` WHERE `Pictures`.`set` = " . $row["picture_set"] . ";";
-            $pic_res = mysqli_query($conn, $pic_sql);
+            $pic_res = mysqli_query($conn, $pic_sql); //recupere image associé a chaque produit 
             $pictures = array();
             if ($pic_res != false)
                 while ($pic_row = mysqli_fetch_array($pic_res))

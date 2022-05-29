@@ -10,16 +10,16 @@ status codes ($STATUS):
 $STATUS = -1;
 if (isset($_POST["questions"]) && isset($_POST["email-address"])) {
     $msg = $_POST["questions"];
-    $email_address = $_POST["email-address"];
+    $email_address = $_POST["email-address"]; // recupere infos passés dans le formulaire 
     
     $sql = "SELECT `Users`.`first_name`, `Users`.`email_address` FROM `Users`  WHERE `Users`.`is_active` = 1 AND `Users`.`permission_level` >= 2 ORDER BY RAND() LIMIT 1";
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sql); //requete recupere un admin au hasard du site
 
     if ($res != false) {
         $row = mysqli_fetch_array($res);
         if ($row) {
             require_once("$ROOT$PATH/res/php/mail.php");
-            send_mail(
+            send_mail( //envoie mail
                 $to = $row["email_address"],
                 $subject = "[ADMIN] Nouvelle demande d'assistance",
                 $body = format_str(read("res/templates/mail/new-request-for-assistance"), [
@@ -40,7 +40,7 @@ if (isset($_POST["questions"]) && isset($_POST["email-address"])) {
     }
 } else {
     redirect("$PATH/");
-}
+} 
 
 get_user_info();
 ?>

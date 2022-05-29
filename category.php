@@ -1,22 +1,22 @@
 <?php
-require_once("./res/php/common.php");
+require_once("./res/php/common.php"); //charge fichier qui contient toutes les fonctions php et co a bdd
 
-if (isset($_GET["id"])) {
-    $id = mysqli_escape_string($conn, $_GET["id"]);
+if (isset($_GET["id"])) { //verifie id categorie est donné
+    $id = mysqli_escape_string($conn, $_GET["id"]); //recupere id
 
     $sql = "SELECT `Categories`.*, `Pictures`.`path` as `picture_path` FROM `Categories` JOIN `Pictures` ON `Categories`.`picture` = `Pictures`.`id` WHERE `Categories`.`id` = $id;";
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sql); //requete verifier categorie existe bdd et recupere ses données
 
     if ($res != false) {
         $CATEGORY = mysqli_fetch_array($res);
-        $sqlproduits = "SELECT `Products`.* FROM `Products` WHERE `Products`.`is_valid` = '1' AND `Products`.`category` = '$id'";
-        $resproduits = mysqli_query($conn, $sqlproduits); 
+        $sqlproduits = "SELECT `Products`.* FROM `Products` WHERE `Products`.`is_valid` = '1' AND `Products`.`category` = '$id'"; 
+        $resproduits = mysqli_query($conn, $sqlproduits); //requete recupere tous les produits de la catégorie
         $PRODUCTS = array();
         if ($resproduits != false){
             while ($row = mysqli_fetch_array($resproduits)) {
                 $product = $row;
                 $pic_sql = "SELECT `Pictures`.`id` AS `picture_id`, `Pictures`.`path` AS `picture_path` FROM `Pictures` WHERE `Pictures`.`set` = '{$row['picture_set']}'";
-                $pic_res = mysqli_query($conn, $pic_sql);
+                $pic_res = mysqli_query($conn, $pic_sql); // pour chaque produit recupere images associées au produit
                 $pictures = array();
                 if ($pic_res != false)
                     while ($pic_row = mysqli_fetch_array($pic_res))
@@ -38,7 +38,7 @@ if (isset($_GET["id"])) {
 get_user_info();
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> <!-- affiche resultat -->
 <html lang="fr-FR">
     <head>
         <?php load("res/templates/head.php"); ?>

@@ -1,4 +1,6 @@
-:root {
+/* Fichier css appelé sur toutes les pages */
+
+:root  { /* création de variables réutilisables */
 
     --error-color: rgb(194, 0, 0);
     --logocolor: #57A6D8; 

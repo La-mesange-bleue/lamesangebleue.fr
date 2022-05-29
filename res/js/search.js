@@ -7,4 +7,4 @@ function order_by() {
     input.value = value;
     form.appendChild(input);
     form.submit();
-}
+}//prend la valeur de la fonction "trier par" et l'inclut dans le formulaire de recherche 

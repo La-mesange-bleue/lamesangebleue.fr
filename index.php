@@ -1,14 +1,14 @@
 <?php
 require_once("./res/php/common.php");
 
-$sql = "SELECT `Products`.* FROM `Products` WHERE `Products`.`is_valid` = '1' ORDER BY RAND() LIMIT 10";
-$res = mysqli_query($conn, $sql);
+$sql = "SELECT `Products`.* FROM `Products` WHERE `Products`.`is_valid` = '1' ORDER BY RAND() LIMIT 10"; 
+$res = mysqli_query($conn, $sql); //requete recupere 10 produits aleatoires validés 
 $PRODUCTS = array();
 if ($res != false) {
     while ($row = mysqli_fetch_array($res)) {
         $product = $row;
         $pic_sql = "SELECT `Pictures`.`id` AS `picture_id`, `Pictures`.`path` AS `picture_path` FROM `Pictures` WHERE `Pictures`.`set` = '{$row['picture_set']}'";
-        $pic_res = mysqli_query($conn, $pic_sql);
+        $pic_res = mysqli_query($conn, $pic_sql); //recupere img associé a chaque produit 
         $pictures = array();
         if ($pic_res != false)
             while ($pic_row = mysqli_fetch_array($pic_res))

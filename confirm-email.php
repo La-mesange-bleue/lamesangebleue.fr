@@ -11,17 +11,17 @@ status codes ($STATUS):
 
 $STATUS = -1;
 if (isset($_GET["activation-code"])) { // if code is passed to the page, verify it
-    $code = strtolower(mysqli_escape_string($conn, $_GET["activation-code"]));
-    $sql = "SELECT `ActivationCodes`.`id`, `ActivationCodes`.`user` FROM `ActivationCodes` WHERE `ActivationCodes`.`code` = '$code';";
-    $res = mysqli_query($conn, $sql);
+    $code = strtolower(mysqli_escape_string($conn, $_GET["activation-code"])); // recupere code activation qui est passé à la page 
+    $sql = "SELECT `ActivationCodes`.`id`, `ActivationCodes`.`user` FROM `ActivationCodes` WHERE `ActivationCodes`.`code` = '$code';"; 
+    $res = mysqli_query($conn, $sql); //verifie que le code d'activation existe dans la bdd
     if ($res != false) {
         $row = mysqli_fetch_array($res);
         if ($row) {
             $user_id = $row["user"];
-            $update_sql = "UPDATE `Users` SET `Users`.`is_active` = 1 WHERE `Users`.`id` = $user_id;";
-            $delete_sql = "DELETE FROM `ActivationCodes` WHERE `ActivationCodes`.`user` = $user_id;";
-            $update_res = mysqli_query($conn, $update_sql);
-            $delete_sql = mysqli_query($conn, $delete_sql);
+            $update_sql = "UPDATE `Users` SET `Users`.`is_active` = 1 WHERE `Users`.`id` = $user_id;"; //active le compte si c'est le cas 
+            $delete_sql = "DELETE FROM `ActivationCodes` WHERE `ActivationCodes`.`user` = $user_id;"; //suprime code d'activation qui existaient pour l'utilisateur actuel
+            $update_res = mysqli_query($conn, $update_sql); //execute 
+            $delete_sql = mysqli_query($conn, $delete_sql); //execute
             if ($update_res == true) {
                 $STATUS = 1;
             } else {
@@ -37,10 +37,10 @@ if (isset($_GET["activation-code"])) { // if code is passed to the page, verify 
     $login = $_SESSION["CONFIRM_EMAIL_login"];
     unset($_SESSION["CONFIRM_EMAIL_login"]);
     $sql = "SELECT `Users`.`id`, `Users`.`first_name`, `Users`.`email_address`, `Users`.`is_active` FROM `Users` WHERE `Users`.`user_name` = '$login' OR `Users`.`email_address` = '$login';";
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sql); // recupere l'utilisateur qui vient de la page connexion ou inscription 
     if ($res != false) {
         $row = mysqli_fetch_array($res);
-        if (! $row["is_active"]) {
+        if (! $row["is_active"]) { //si le compte n'est pas encore activé
             $unique = false;
             while (! $unique) {
                 $code = random_code(8);
@@ -49,11 +49,11 @@ if (isset($_GET["activation-code"])) { // if code is passed to the page, verify 
                 if ($check_res != false) {
                     $check_row = mysqli_fetch_array($check_res);
                     if ($check_row && $check_row[0] == 0) $unique = true;
-                }
+                } //44 a 53 generer code aleatoire unique 
             }
-            $sql2 = "DELETE FROM `ActivationCodes` WHERE `ActivationCodes`.`user` = " . $row["id"] . ";";
-            $sql3 = "INSERT INTO `ActivationCodes` (`id`, `code`, `user`) VALUES (NULL, '$code', " . $row["id"] . ");";
-            $res2 = mysqli_query($conn, $sql2);
+            $sql2 = "DELETE FROM `ActivationCodes` WHERE `ActivationCodes`.`user` = " . $row["id"] . ";"; //supprime les anciens codes
+            $sql3 = "INSERT INTO `ActivationCodes` (`id`, `code`, `user`) VALUES (NULL, '$code', " . $row["id"] . ");"; //ajoute nouveau code dans la bdd
+            $res2 = mysqli_query($conn, $sql2); 
             $res3 = mysqli_query($conn, $sql3);
             if ($res3 == true) {
                 require_once("./res/php/mail.php");
@@ -65,7 +65,7 @@ if (isset($_GET["activation-code"])) { // if code is passed to the page, verify 
                         "code" => strtoupper($code),
                         "pageUrl" => "http://" . $_SERVER["HTTP_HOST"] . "$PATH/confirm-email.php"
                     ])
-                );
+                ); //59 68 envoyer mail confirmation compte 
                 $STATUS = 0;
             } else {
                 $_SESSION["CONFIRM_EMAIL_error_msg"] = "La création du code de confirmation a échoué";

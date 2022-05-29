@@ -3,16 +3,16 @@ require_once("./res/php/common.php");
 
 if (isset($_POST["user-login"]) && isset($_POST["password"])) {
     $login = mysqli_escape_string($conn, $_POST["user-login"]);
-    $password = mysqli_escape_string($conn, $_POST["password"]);
+    $password = mysqli_escape_string($conn, $_POST["password"]); //recupere @ ou user name et mdp saisi
 
     $sql = "SELECT `Users`.`id`, `Users`.`email_address`, `Users`.`password`, `Users`.`is_active` FROM `Users` WHERE `Users`.`user_name` = '$login' OR `Users`.`email_address` = '$login';";
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sql); //verifie compte correspond 
     if ($res != false) {
         $row = mysqli_fetch_array($res);
         if ($row) {
-            if (password_verify($password, $row["password"])) {
+            if (password_verify($password, $row["password"])) { //verifie si mdp saisi correspond a mdp bdd
                 if ($row["is_active"]) {
-                    $_SESSION["user_id"] = $row["id"];
+                    $_SESSION["user_id"] = $row["id"]; //si c'est le cas stock id utilisateur dans session php(variables persistantes dans plusieurs pages)
                     redirect("$PATH/");
                 } else {
                     $_SESSION["CONFIRM_EMAIL_login"] = $login;

@@ -12,7 +12,7 @@ function check_user_login() {
         show_error_msg("user-login", "Veuillez remplir ce champ");
         return false;
     }
-}
+} //verifie si le champ username a été rempli correctement au moment de la connexion
 
 
 function check_password() {
@@ -26,11 +26,11 @@ function check_password() {
         show_error_msg("password", "Veuillez remplir ce champ");
         return false;
     }
-}
+} //verifie si le champ mdp a été rempli correctement 
 
 
 function check_form() {
     const a = check_user_login();
     const b = check_password();
     return a && b;
-}
+} // verifie si les deux fonctions sont valides 
