@@ -5,7 +5,7 @@ get_user_info();
 
 if (isset($USER_INFO)) {
     if (isset($_GET['remove'])) {
-        $rm_sql = "DELETE FROM `Wishlist` WHERE `Wishlist`.`id` = '{$_GET['remove']}' AND `Wishlist`.`user` = '{$USER_INFO['id']}'";
+        $rm_sql = "DELETE FROM `Wishlist` WHERE `Wishlist`.`product` = '{$_GET['remove']}' AND `Wishlist`.`user` = '{$USER_INFO['id']}'";
         $rm_res = mysqli_query($conn, $rm_sql);
         if ($rm_res == false) {
             $_SESSION['WISHLIST_error_msg'] = "Le produit n'a pas pu être retiré de votre liste d'envies";
@@ -69,7 +69,7 @@ if (isset($USER_INFO)) {
                     ?>
                     <a class="no-link" href="<?= $PATH ?>/product.php?ref=<?= $PRODUCT["reference"] ?>">
                         <div class="article">
-                            <div class="article-remove" style="background-image: url('<?= res('res/img/icons/trash.fill.svg') ?>');"></div>
+                            <div class="article-remove" style="background-image: url('<?= res('res/img/icons/trash.fill.svg') ?>');" onclick="event.preventDefault(); window.location.href = '<?= $PATH ?>/wishlist.php?remove=<?= $PRODUCT['id'] ?>';"></div>
                             <div class="article-picture-viewer"><?php
                                 $is_first = true;
                                 foreach ($PRODUCT["pictures"] as $picture) {

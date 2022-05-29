@@ -3,7 +3,7 @@ require_once("./res/php/common.php");
 
 if (isset($_GET['ref']) && str_length($_GET['ref']) > 0) {
     $ref = $_GET['ref'];
-    $sql = "SELECT `Products`.`name`, `Products`.`price`, `Products`.`description`, EXTRACT(YEAR FROM `Products`.`release_date`) AS `release_year`, `Products`.`picture_set` FROM `Products` WHERE `Products`.`reference` = '$ref' AND `Products`.`is_valid` = '1'";
+    $sql = "SELECT `Products`.`id`, `Products`.`name`, `Products`.`price`, `Products`.`description`, EXTRACT(YEAR FROM `Products`.`release_date`) AS `release_year`, `Products`.`picture_set` FROM `Products` WHERE `Products`.`reference` = '$ref' AND `Products`.`is_valid` = '1'";
     $res = mysqli_query($conn, $sql);
     if ($res != false) {
         $row = mysqli_fetch_array($res);
@@ -51,7 +51,7 @@ get_user_info();
         </div>
         <div class="row">
             <div class="article-price"><?= number_format($PRODUCT['price'], 2, ',', ' ') ?> €</div>
-            <div class="article-add-to-cart-button"><button class="add-to-cart buttonls">Ajouter au panier</button></div>
+            <div class="article-add-to-cart-button"><button class="add-to-cart buttonls" onclick="window.location.href = '<?= $PATH ?>/wishlist.php?add=<?= $PRODUCT['id'] ?>';">Ajouter à la liste de souhaits</button></div>
         </div>
         <div class="article-description"><?= $PRODUCT['description'] ?></div>
     </div>
