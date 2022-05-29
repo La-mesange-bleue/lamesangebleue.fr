@@ -1,0 +1,42 @@
+.article {
+    all: unset;
+    margin: 20px auto;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.article .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.article .article-picture-viewer {
+    height: 15em;
+}
+
+.article .article-name {
+    font-size: 1.5em;
+}
+
+.article .article-release-year {
+    font-style: italic;
+}
+
+.article .article-price {
+    font-size: 1.2em;
+}
+
+.article .article-description {
+    text-align: justify;
+}
+
+.article .buttonls {
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    font-size: 1em;
+}
