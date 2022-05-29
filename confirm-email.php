@@ -40,9 +40,9 @@ if (isset($_GET["activation-code"])) { // if code is passed to the page, verify 
     $res = mysqli_query($conn, $sql);
     if ($res != false) {
         $row = mysqli_fetch_array($res);
-        if (!$row["is_active"]) {
+        if (! $row["is_active"]) {
             $unique = false;
-            while (!$unique) {
+            while (! $unique) {
                 $code = random_code(8);
                 $check_sql = "SELECT COUNT(*) FROM `ActivationCodes` WHERE `ActivationCodes`.`code` = '$code';";
                 $check_res = mysqli_query($conn, $check_sql);

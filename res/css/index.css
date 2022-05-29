@@ -1,13 +1,3 @@
-#blockpromo {
-    background-color: #F7F7F7; 
-    height: 180px;
-    width: 100%; 
-    padding: 25px;  
-    resize: none;
-    display: block;
-    margin: auto;
-    
-}
 
 .block-home {
     display: flex;
@@ -15,13 +5,11 @@
 
 }
 
-.article {
-    background-color: #F7F7F7; 
-    height: 150px; 
-    width: 150px; 
-    padding: 15px;  
-    resize: none; 
-    display: block;
-    margin: 50px;
-}
 
+#promo-block {
+    background-image: url('../img/rounded-left.svg'), url('../img/rounded-right.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center, right center; 
+    padding: 30px 150px;
+}

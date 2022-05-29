@@ -20,15 +20,14 @@ if (isset($_GET["q"]) && str_length($_GET["q"]) > 0) {
     $SEARCH_QUERY = trim($SEARCH_QUERY);
     $words = explode(" ", $SEARCH_QUERY);
     $filters_arr = [
-        "'1' = '1'"
     ];
     foreach ($words as $word)
         if (str_length($word) > 0)
-            array_push($filters_arr, "`Products`.`name` LIKE '%$word%' OR `Products`.`description` LIKE '%$word%'");
-    $filters = join(" OR ", $filters_arr);
+            array_push($filters_arr, "(`Products`.`name` LIKE '%$word%' OR `Products`.`description` LIKE '%$word%')");
+    $filters = join(" AND ", $filters_arr);
 
     // add `Categories`.`picture` to $sql?
-    $sql = "SELECT `Products`.*, `Categories`.`name` AS `category_name` FROM `Products` JOIN `Categories` ON `Products`.`category` = `Categories`.`id` WHERE ($filters) AND `Products`.`is_valid` = '1' ORDER BY $order_by;";
+    $sql = "SELECT `Products`.*, `Categories`.`name` AS `category_name` FROM `Products` JOIN `Categories` ON `Products`.`category` = `Categories`.`id` WHERE " . (($filters) ? "($filters) AND " : "") . "`Products`.`is_valid` = 1 ORDER BY $order_by;";
     $res = mysqli_query($conn, $sql);
     if ($res != false) {
         $PRODUCTS = array();
@@ -81,40 +80,30 @@ get_user_info();
                     ?>
                 </select>
 
-                <?php
-                foreach ($PRODUCTS as $PRODUCT) {
-                    /*
-                    Usable variables:
-                    $PRODUCT["id"] => product's id (useless)
-                    $PRODUCT["reference"] => reference
-                    $PRODUCT["category"] => category's id (useless)
-                    $PRODUCT["category_name"] => category's name
-                    $PRODUCT["name] => product's name
-                    $PRODUCT["price"] => price
-                    $PRODUCT["description"] => description
-                    $PRODUCT["release_date"] => release date (date object?)
-                    $PRODUCT["picture_set"] => picture set (useless)
-                    $PRODUCT["pictures"] => array of product's illustration pictures; use foreach() to browse pictures
-
-                    $PRODUCT["is_valid"] => is the product allowed for sale by an admin?
-                    $PRODUCT["sale_date"] => when the product was put on sale
-                    */
-                ?>
-                    <div>
-                        <div class="product-pictures">
-                            <?php
-                            foreach ($PRODUCT["pictures"] as $picture) {
-                            ?>
-                                <img style="height: 128px;" src="<?= picture($picture["picture_path"]) ?>">
-                            <?php
-                            }
-                            ?>
+                <div id="article-list">
+                    <?php
+                    foreach ($PRODUCTS as $PRODUCT) {
+                    ?>
+                    <a class="no-link" href="<?= $PATH ?>/product.php?ref=<?= $PRODUCT["reference"] ?>">
+                        <div class="article">
+                            <div class="article-picture-viewer"><?php
+                                $is_first = true;
+                                foreach ($PRODUCT["pictures"] as $picture) {
+                                ?>
+                                <div class="article-picture <?= (! $is_first)? "hidden": "" ?>" style="background-image: url('<?= picture($picture["picture_path"]) ?>');"></div>
+                                <?php
+                                $is_first = false;
+                                }
+                            ?></div>
+                            <div class="article-name"><?= $PRODUCT["name"] ?></div>
+                            <div class="article-price"><?= number_format($PRODUCT["price"], 2, ',', ' ') ?> €</div>
                         </div>
-                        <div class="product-name"><?= $PRODUCT["name"] ?></div>
-                        <div class="product-price"><?= format_price($PRODUCT["price"]) ?> €</div>
-                    </div>
-                <?php
-                }
+                    </a>
+                    <?php
+                    }
+                    ?>
+                </div>
+            <?php
             } else {
             ?>
                 <h4>Aucun résultat</h4>

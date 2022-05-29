@@ -34,9 +34,9 @@ $mail->Password = read("res/top_secret/mail_password");
 */
 
 $mail->Host = "ssl0.ovh.net";
-$mail->Username = "test@thomasleveille.com";
-$mail->Password = 'c@rE2152+';
-$mail->setFrom("test@thomasleveille.com", $WEBSITE_NAME);
+$mail->Username = "noreply@thomasleveille.com";
+$mail->Password = read("res/top_secret/mail_password");
+$mail->setFrom("noreply@thomasleveille.com", $WEBSITE_NAME);
 
 function send_mail($to, $subject, $body, $is_html = true) {
     global $mail;

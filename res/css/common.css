@@ -17,6 +17,11 @@ html, body {
    
 }
 
+.no-link {
+    text-decoration: none;
+    color: unset;
+}
+
 #menu {
     background: black; 
     width: 100%; 
@@ -31,7 +36,8 @@ html, body {
 
 #m-left {
 
-    float: left; 
+    float: left;
+    display: flex; 
 
 }
 
@@ -80,20 +86,63 @@ html, body {
 
 
 #m-middle {
-
     padding-top: 20px;
     float: left;
     flex: 1; /* ADDED */
 }
 
 #produits {
-
     color: white;
     margin: 8px;
     margin-left: 0px;
     vertical-align: text-bottom;
-    
+}
 
+#article-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 20px;
+}
+
+.article {
+    width: 15em;
+    text-align: center;
+    background-color: hsl(210, 50%, 95%);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    gap: 10px;
+}
+
+.article .article-picture-viewer {
+    width: 100%;
+    height: 10em;
+}
+
+.article .article-picture {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.article .article-picture.hidden {
+    display: none;
+}
+
+.article .article-name {
+    font-size: 1.1em;
+}
+
+.article .article-price {
+    color: hsl(210, 100%, 25%);
 }
 
 #site-search {
@@ -101,18 +150,31 @@ html, body {
    width: calc(100% - 64px); /* ADDED */
     font-size: 15px;
     padding: 3px;
+    height: 35px;
+    border-radius: 10px;
+}
 
+#search-form {
+    display: flex; 
+    gap: 5px;
 }
 
 #searchbutton {
+    border-radius: 10px;
+    outline: none;
+    background-color:#fdff7b;
+    border: none;
+    
+}
+   
 
+#searchbutton img {
     width: 20px; 
     padding: 2px;
     
 }
    
 #m-right {
-
     float: right; 
     padding-top: 20px; 
 }
@@ -122,7 +184,6 @@ html, body {
 }
 
 #heart {
-   
     margin: 0px; 
     padding: 20px; 
 }
@@ -160,14 +221,14 @@ select.invalid {
 
 }
 .up {
-    background-color: #ebe46c;
+    background-color: #fdff7b;
     text-align: center;
     padding: 5px 0px;
     cursor: pointer; /* afficher un curseur de main sur le "Retour en haut" */
 }
 
 .secondbar {
-   background-color: #ebe46c; 
+   background-color: #fdff7b; 
    text-align: center; 
    padding: 5px 0; 
 }
@@ -183,7 +244,7 @@ select.invalid {
 }
 
 .footer {
-    background-color: #C9DEDE; 
+    background-color: black; 
 }
 
 .footer-content {
@@ -201,4 +262,81 @@ select.invalid {
 }
 .knowusbetter {
     padding: 20px; 
+}
+
+.buttonls{
+    height: 45px; 
+    width: 300px;
+    color: white; 
+    font-weight: bold;
+    /*
+        100     300     500     700     900
+        lighter         normal  bold    bolder
+    */
+    background-color: #242F64; 
+    border-radius: 10px; 
+    transition: all 500ms;
+    transition: background-color 1s ease;
+}
+
+.buttonls:hover {
+    background-color: black;
+}
+
+.buttonls:active {
+    background-color: white;
+}
+#questions {
+    border-radius: 10px;
+}
+
+#email-address {
+    border-radius: 10px;
+}
+
+.knowusbetter {
+    color: white;
+}
+
+.services-products {
+    color: white;
+}
+
+.help {
+    color: white;
+}
+
+.pagebanner {
+    width: 100%;
+    color: #fff;
+    font-size: 1.5em;
+    background-color: #000;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    position: relative;
+  
+}
+
+.pagebanner .background-image {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(3px) brightness(90%);
+}
+
+.pagebanner .title {
+    font-size: 1.5em;
+    z-index: 0;
+    font-weight: bold;
+}
+
+.pagebanner .title img {
+    height: 1em;
 }

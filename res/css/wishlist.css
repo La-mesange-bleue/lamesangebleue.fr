@@ -1,0 +1,53 @@
+#article-list .article-to-cart .buttonls {
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#article-list {
+    flex-direction: column;
+}
+
+.article {
+    width: unset;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    text-align: unset;
+}
+
+.article > * {
+    margin: auto;
+}
+
+.article .article-remove {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    aspect-ratio: 1 / 1;
+    max-width: 32px;
+    height: 32px;
+}
+
+.article .article-picture-viewer {
+    width: unset;
+    aspect-ratio: 1 / 1;
+    max-width: 100px;
+}
+
+.article .article-name {
+    flex-grow: 1;
+    min-width: 200px;
+    max-width: 50%;
+}
+
+.article .article-price {
+    text-align: right;
+    min-width: 100px;
+}
+
+.article .article-to-cart {
+    text-align: right;
+    min-width: 150px;
+}
